@@ -1,0 +1,47 @@
+[user]
+	email = naufilasar.dev@gmail.com
+	name = Naufil (Z-xus)
+[core]
+	editor = nvim
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[push]
+	default = simple
+[diff]
+	tool = vimdiff
+[merge]
+	tool = vimdiff
+[mergetool "vimdiff"]
+	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED
+[http]
+	postBuffer = 524288000
+	lowSpeedLimit = 0
+	lowSpeedTime = 999999
+[alias]
+	st = status -s
+	co = checkout
+	ci = commit
+	br = branch
+	df = diff --color-words
+	lgs = shortlog --summary --numbered
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	ls = ls-files
+	aa = add -A
+	cam = commit -am
+	ci = commit
+	bl = blame -w -C -C -C -L
+	aliases = config --get-regexp alias
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[rerere]
+	enabled = true
+[branch]
+	sort = -committerdate
+[safe]
+	directory = /home/zxus
