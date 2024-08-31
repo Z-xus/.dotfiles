@@ -1,0 +1,132 @@
+{
+    "layer": "top",
+    "height": 36,
+    "spacing": 0,
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        // TODO: "custom/updates",
+        "battery",
+        // "pulseaudio",
+        "network",
+        "clock",
+    ],
+    "hyprland/window": {
+        "max-length": 100,
+        "separate-outputs": true,
+        "format": "{}"
+    },
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "on-click": "activate"
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 12
+    },
+    "custom/updates": {
+        "exec": "~/.local/bin/polybar/updates-pacman-aurhelper",
+        "format": "󰏔 {}",
+        "interval": 600
+    },
+    "clock": {
+        "timezone": "Asia/Kolkata",
+        "tooltip-format": "<tt>{calendar}</tt>",
+    // "format-alt": "\uf073 {%A, %B %d, %Y (%R)}",
+    // "format": "{:%d/%m/%Y %H:%M }"
+    "format": "{:%a, %b %d %R %p}"
+        //"format": " {:%H:%M}"
+    },
+    // Eric.
+    // "battery": {
+    //     "states": {
+            // "good": 95,
+    //         "warning": 30
+    //     },
+    //     "format": "{icon} {capacity}%",
+    //     "format-charging": " {capacity}%",
+    //     "format-plugged": "󰂄 {capacity}%",
+    //     "format-icons": [
+    //         "",
+    //         "",
+    //         "",
+    //         "",
+    //         "",
+    //         ""
+    //     ]
+    // },
+    "battery": {
+        "exec"  : "batter_warning",
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-full": "󱈑 {capacity}%",
+        "format-icons": [
+            "󱊡",
+            "󱊢",
+            "󱊣"
+        ]
+    },
+    "disk": {
+        "interval": 300,
+        "format": "󰋊 {free}",
+        "path": "/"
+    },
+    "network": {
+        "tooltip": false,
+        "format-wifi": "󰖩",
+        "format-disconnected": "\udb82\udd2d",
+        "format-ethernet": "\udb80\ude00",
+        "on-click": "rofi-wifi-menu.sh"
+    },
+    // "pulseaudio": {
+    //     // "scroll-step": 1, // %, can be a float
+    //     "format": "󰕾 {volume}%",
+    //     "format-muted": "󰖁 {volume}%",
+    //     "on-click": "pavucontrol"
+    // },
+    "pulseaudio": {
+    "on-click": "pactl set-sink-mute 0 toggle",
+    "on-scroll-down": "pactl set-sink-volume 0 +5%",
+    "on-scroll-up": "pactl set-sink-volume 0 -5%",
+    "scroll-step": 1,
+    "format": "{icon}",
+    "format-muted": "󰖁 ",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+    "custom/power": {
+        "format": "󰤆",
+        "on-click": "wlogout"
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    }
+}
+// vim: ft=jsonc
