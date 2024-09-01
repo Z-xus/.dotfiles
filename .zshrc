@@ -26,6 +26,8 @@ export KEYTIMEOUT=1
 # bindkey '^n' history-search-forward
 # bindkey '^[w' kill-region
 
+bindkey -s ^f "tmux-sessionizer\n"
+
 # Add in zsh plugins
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-syntax-highlighting
@@ -112,6 +114,9 @@ alias ll='eza -lha --icons=auto --sort=name --group-directories-first'
 # alias ld='eza -lhD --icons=auto'
 alias cat='bat'
 
+alias yls="yadm ls | awk -F/ '{ if (NF==1) {print \$0} else if (!seen[\$1\"/\"\$2]) {print \$1\"/\"\$2\"/\"; seen[\$1\"/\"\$2] = 1} }'"
+alias yst="yadm status"
+
 # Movement
 # Bind Alt+Left to move backward by word
 bindkey '^[[1;3D' backward-word
@@ -120,6 +125,13 @@ bindkey '^[[1;3C' forward-word
 
 
 # Functions
+yup() {
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: yup <file> <commit msg>"
+    fi
+    yadm add "$1"
+    yadm commit -m "$2"
+}
 
 t() {
     if tmux has-session -t work 2>/dev/null; then
@@ -227,6 +239,7 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
 fi
 
 export PATH=~/.local/scripts:$PATH
+export PATH=~/.local/bin:$PATH
 export WORDCHARS=${WORDCHARS//[\/]}
 export GIT_TERMINAL_PROMPT=1
 
