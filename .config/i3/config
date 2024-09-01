@@ -92,8 +92,8 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'end X session?' -B 'Yes, exi
 bindsym $mod+shift+x exec betterlockscreen -l --off 5 && betterlockscreen -u /home/$USER/Pictures/wallpapers/new
 
 # splits
-bindsym $mod+z split h
-bindsym $mod+v split v
+bindsym $mod+z split v
+bindsym $mod+v split h
 
 # bindsym $mod+Shift+f floating toggle, resize set 1320 1080, move position 0px 0px
 
