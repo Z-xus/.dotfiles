@@ -68,6 +68,28 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
+# Select text
+
+if [[ -z "$TMUX" ]]; then
+    shift-arrow() {
+      ((REGION_ACTIVE)) || zle set-mark-command
+      zle $1
+    }
+    shift-left()  shift-arrow backward-char
+    shift-right() shift-arrow forward-char
+    shift-up()    shift-arrow up-line-or-history
+    shift-down()  shift-arrow down-line-or-history
+    zle -N shift-left
+    zle -N shift-right
+    zle -N shift-up
+    zle -N shift-down
+
+    bindkey $terminfo[kLFT] shift-left
+    bindkey $terminfo[kRIT] shift-right
+    bindkey $terminfo[kri]  shift-up
+    bindkey $terminfo[kind] shift-down
+fi
+
 # Exports
 export EDITOR='nvim'
 export LANG='en_US.UTF-8'
@@ -95,10 +117,6 @@ if [ -f ~/.ls_colors ]; then
 fi
 
 
-export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
-export CORE_PEER_LOCALMSPID="Org1MSP"
-
 bindkey '\t' autosuggest-accept
 bindkey '^I'   complete-word
 bindkey '^[[Z' autosuggest-accept
@@ -114,9 +132,12 @@ alias lt='eza -T -L 2 --git --git-ignore --icons=auto'
 alias ll='eza -lha --icons=auto --sort=name --group-directories-first'
 # alias ld='eza -lhD --icons=auto'
 alias cat='bat'
-
+alias send='curl -F "file=@$1" 0x0.st'
+alias receive='curl -o $1 0x0.st/$1'
 alias yls="yadm ls | awk -F/ '{ if (NF==1) {print \$0} else if (!seen[\$1\"/\"\$2]) {print \$1\"/\"\$2\"/\"; seen[\$1\"/\"\$2] = 1} }'"
 alias yst="yadm status"
+alias cl='calcure 2> /dev/null'
+alias bt='bluetoothctl'
 
 # Movement
 # Bind Alt+Left to move backward by word
@@ -251,3 +272,4 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+export PATH=/home/neon/.meteor:$PATH
