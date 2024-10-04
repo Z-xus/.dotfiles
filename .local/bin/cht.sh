@@ -13,14 +13,16 @@ if echo "$languages" | grep -qs $selected; then
     # tmux -2 split-window -h bash -c "bat -p --color=always <(curl cht.sh/$selected/$(echo "$query" | tr " " '+'))"
 
     query_url=$(echo "$query" | tr " " '+')
+    # Added ?T to get the unhighlighted version
+    # command="curl cht.sh/$selected/$query_url | less -R"
     command="curl cht.sh/$selected/$query_url | bat --plain --color=always"
-
-    # tmux split-window -h bash -c "TERM=xterm-256color bat --plain --color=always <(curl cht.sh/$selected/$(echo "$query" | tr " " '+'))"
 else
     command="curl cht.sh/$selected~$query | bat --plain --color=always"
-    # tmux split-window -h bash -c "TERM=xterm-256color bat --plain --color=always <(curl cht.sh/$selected~$query))"
-    
 fi
 
-i3-msg split h
-wezterm -e /bin/bash -c "$command" 2> /dev/null
+if [ -n "$TMUX" ]; then
+    tmux -2 split-window -h bash -c "$command"
+else
+    i3-msg split h
+    wezterm -e /bin/bash -c "$command" 2> /dev/null
+fi
