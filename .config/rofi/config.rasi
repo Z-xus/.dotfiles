@@ -7,10 +7,11 @@ configuration{
     location: 0;
     disable-history: false;
     hide-scrollbar: true;
-    display-combi: " 🖥️";
+/*    display-combi: " 🖥️";
     display-run: " 🏃";
     display-window: " 🪟";
+*/
     sidebar-mode: true;
 }
 
-@theme "catppuccin-mocha"
+@theme "raycast"
