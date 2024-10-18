@@ -12,6 +12,6 @@ config.color_scheme = "Catppuccin Mocha (Gogh)"
 -- config.color_scheme = 'Chalk (dark) (terminal.sexy)'
 
 config.window_background_opacity = 0.8
-config.macos_window_background_blur = 18
+config.macos_window_background_blur = 12
 
 return config
