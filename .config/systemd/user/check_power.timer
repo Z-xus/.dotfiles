@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Check Power Status every 15 seconds
+
+[Timer]
+OnActiveSec=15s
+OnUnitActiveSec=15s
+Unit=check_power.service
+
+[Install]
+WantedBy=default.target

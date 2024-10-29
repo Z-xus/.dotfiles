@@ -1,0 +1,9 @@
+[Unit]
+Description=Check Power Status
+
+[Service]
+Type=simple
+ExecStart=/home/neon/.local/bin/check_power.sh
+
+[Install]
+WantedBy=default.target
