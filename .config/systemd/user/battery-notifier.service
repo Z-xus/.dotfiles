@@ -1,7 +1,0 @@
-[Unit]
-Description=Battery Notification Service
-After=graphical-session.target
-
-[Service]
-Type=simple
-ExecStart=%h/.local/bin/battery_notifier.sh
