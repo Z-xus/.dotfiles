@@ -1,0 +1,10 @@
+[Unit]
+Description=Battery Notification Timer
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+AccuracySec=1s
+
+[Install]
+WantedBy=graphical-session.target

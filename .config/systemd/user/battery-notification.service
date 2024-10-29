@@ -1,0 +1,13 @@
+[Unit]
+Description=Battery Notification Service
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+ExecStart=/home/neon/.local/bin/battery_notification.sh
+
+[Install]
+WantedBy=graphical-session.target
