@@ -44,4 +44,4 @@
 [branch]
 	sort = -committerdate
 [safe]
-	directory = /home/zxus
+	directory = /home/neon/
