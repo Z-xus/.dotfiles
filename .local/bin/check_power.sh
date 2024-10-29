@@ -18,13 +18,13 @@ check_power() {
                      -a "System" \
                      -u low \
                      "Power" \
-                     "AC Connected Last: $LAST_STATE Current: $current_state"
+                     "AC Connected"
         else
             dunstify -i "battery" \
                      -a "System" \
                      -u low \
                      "Power" \
-                     "AC Disconnected Last: $LAST_STATE Current: $current_state"
+                     "AC Disconnected"
         fi
         echo "$current_state" > "$STATE_FILE"
     fi
