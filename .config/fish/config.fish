@@ -52,7 +52,7 @@ if test -f ~/.ls_colors
 end
 
 # Aliases
-alias n 'nvim'
+# alias n 'nvim'
 alias ff 'firefox'
 alias nv 'neovide'
 alias ssha 'eval (ssh-agent) && ssh-add'
@@ -157,3 +157,5 @@ end
 # Shell integrations
 fzf --fish | source
 zoxide init fish | source
+set -gx VOLTA_HOME "$HOME/.volta"
+set -gx PATH "$VOLTA_HOME/bin" $PATH
