@@ -3,13 +3,15 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 for_window [class="^.*"] border pixel 2
+for_window [class="zen-alpha"] border pixel 0
+for_window [class="org.wezfurlong.wezterm"] border pixel 0
 
 set $mod Mod4
 set $alt Mod1
 
 ########################### VARS ###########################
 set $terminal wezterm
-set $browser firefox
+# set $browser /home/neon/.local/share/zen &> /tmp/zen.log
 set $browser2 brave
 set $explorer thunar
 
@@ -24,7 +26,10 @@ exec polybar -c ~/.config/polybar/config.ini nauf &
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+exec --no-startup-id greenclip daemon
 # exec_always --no-startup-id betterlockscreen -u /home/neon/Pictures/wallpapers/new/
+# Set volume unmuted on startup (dunno why it's muted)
+exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ 0
 
 ######################### SCREENSHOT #########################
 
@@ -76,8 +81,21 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 # Applications
 bindsym $mod+Return exec $terminal
 bindsym $mod+e exec $explorer
-bindsym $mod+b exec $browser
-bindsym $mod+space exec --no-startup-id rofi -show combi -theme ~/.config/rofi/raycast.rasi
+# bindsym $mod+b exec $browser
+# bindsym $mod+b exec zen &> /tmp/zen.log
+
+# Sorry for this. I am a mistake.
+bindsym $mod+b exec --no-startup-id /bin/bash -l -c "/home/neon/.local/share/zen/zen"
+
+
+# bindsym $mod+space exec --no-startup-id rofi -show combi -theme ~/.config/rofi/raycast.rasi
+bindsym $mod+space exec --no-startup-id rofi -show drun -theme ~/.config/rofi/raycast.rasi
+bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+bindsym $mod+i exec --no-startup-id rofi -modi emoji -show emoji
+
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
 
 # Focus in window with fullscreen
 bindsym $mod+Shift+v [class="Code"] focus; fullscreen toggle
