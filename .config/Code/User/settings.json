@@ -2,7 +2,7 @@
     "editor.mouseWheelZoom": true,
     "editor.fontFamily": "'Maple Mono NF', 'Droid Sans Mono', 'monospace', monospace",
     "editor.fontSize": 16,
-    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.colorTheme": "Vesper",
     "workbench.sideBar.location": "right",
     "workbench.iconTheme": "material-icon-theme",
     "window.doubleClickIconToClose": true,
@@ -19,6 +19,7 @@
     "javascript.suggest.paths": false,
     "typescript.preferences.importModuleSpecifier": "relative",
     "git.openRepositoryInParentFolders": "never",
-    "telemetry.telemetryLevel": "off"
+    "telemetry.telemetryLevel": "off",
+    "extensions.ignoreRecommendations": true
 
 }
