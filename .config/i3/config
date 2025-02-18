@@ -10,14 +10,15 @@ set $mod Mod4
 set $alt Mod1
 
 ########################### VARS ###########################
-set $terminal wezterm
+set $terminal ghostty
+# set $terminal wezterm
 # set $browser /home/neon/.local/share/zen &> /tmp/zen.log
 set $browser2 brave
 set $explorer thunar
 
 ######################### AUTOSTART #########################
 
-exec --no-startup-id picom
+exec --no-startup-id picom --animations -b
 exec_always feh ~/Pictures/wallpapers/new/* --randomize --bg-fill
 exec --no-startup-id xrdb -merge ~/.Xresources
 exec --no-startup-id clipmenud
@@ -52,7 +53,8 @@ bindsym Shift+Print exec --no-startup-id maim --capturebackground --hidecursor -
 
 ## Clipboard Screenshots
 # Full screenshot to clipboard
-bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+bindsym Ctrl+Print exec --no-startup-id flameshot full -c
+# bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
 
 # Screenshot of active window to clipboard
 bindsym Ctrl+$mod+Print exec --no-startup-id maim --hidecursor --capturebackground --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
@@ -85,8 +87,9 @@ bindsym $mod+e exec $explorer
 # bindsym $mod+b exec zen &> /tmp/zen.log
 
 # Sorry for this. I am a mistake.
-bindsym $mod+b exec --no-startup-id /bin/bash -l -c "/home/neon/.local/share/zen/zen"
+bindsym $mod+b exec --no-startup-id /bin/bash -l -c "/home/neon/.local/share/_zen/zen"
 
+bindsym $mod+g exec --no-startup-id "~/.local/scripts/zxus.sh"
 
 # bindsym $mod+space exec --no-startup-id rofi -show combi -theme ~/.config/rofi/raycast.rasi
 bindsym $mod+space exec --no-startup-id rofi -show drun -theme ~/.config/rofi/raycast.rasi
