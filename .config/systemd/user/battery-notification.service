@@ -6,8 +6,9 @@ After=graphical-session.target
 [Service]
 Type=simple
 Environment=DISPLAY=:0
-Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-ExecStart=/home/neon/.local/bin/battery_notification.sh
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%U/bus
+ExecStart=%h/.local/bin/battery-notification.sh
+Restart=no
 
 [Install]
 WantedBy=graphical-session.target
