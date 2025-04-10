@@ -31,3 +31,4 @@ check_power() {
 }
 
 check_power
+
