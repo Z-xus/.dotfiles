@@ -45,6 +45,7 @@ zinit snippet OMZP::archlinux
 # zinit snippet OMZP::command-not-found
 
 # Load completions
+fpath+=~/.zfunc
 autoload -Uz compinit && compinit
 zinit cdreplay -q
 
@@ -53,6 +54,7 @@ HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
+export HISTIGNORE="tgpt*:$HISTIGNORE"
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -123,8 +125,11 @@ bindkey '^[[Z' autosuggest-accept
 
 # Aliases
 alias n='nvim'
+alias lg='lazygit'
+alias gacp='git aa && git ci && git push'
+alias copy='xclip -selection clipboard'
 alias ff='firefox'
-alias nv='neovide'
+alias nv='neovide . & disown'
 alias ssha='eval $(ssh-agent) && ssh-add'
 alias l='eza -a --icons=auto'
 alias ls='eza -lh --icons=auto --color-scale-mode=gradient'
@@ -135,9 +140,12 @@ alias cat='bat'
 alias send='curl -F "file=@$1" 0x0.st'
 alias receive='curl -o $1 0x0.st/$1'
 alias yls="yadm ls | awk -F/ '{ if (NF==1) {print \$0} else if (!seen[\$1\"/\"\$2]) {print \$1\"/\"\$2\"/\"; seen[\$1\"/\"\$2] = 1} }'"
-alias yst="yadm status"
+alias yst="yadm st"
 alias cl='calcure 2> /dev/null'
 alias bt='bluetoothctl'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .~='cd ~'
 
 # Movement
 # Bind Alt+Left to move backward by word
@@ -147,6 +155,11 @@ bindkey '^[[1;3C' forward-word
 
 
 # Functions
+
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
 yup() {
     if [ -z "$1" ] || [ -z "$2" ]; then
         echo "Usage: yup <file> <commit msg>"
@@ -168,7 +181,8 @@ gpp() {
         echo "Usage: run_cpp <filename>"
         return 1
     fi
-    g++ -std=c++17 -O2 -Wall -Wextra -Wshadow -D_GLIBCXX_DEBUG -DLOCAL -o a.out "$1" && ./a.out
+    g++ -std=c++23 -O2 -Wall -Wextra -Wshadow -D_GLIBCXX_DEBUG -DLOCAL -o a.out "$1" && ./a.out
+    # g++ -std=c++17 -O2 -Wall -Wextra -Wshadow -D_GLIBCXX_DEBUG -DLOCAL -o a.out "$1" && ./a.out
     # g++ -std=c++17 -O2 -D_GLIBCXX_DEBUG -DLOCAL -o a.out "$1" && ./a.out
 }
 
@@ -192,36 +206,36 @@ gpp() {
 #   fi
 # }
 
-rm() {
-    # Prevent deletion of root and home directories
-    for arg in "$@"; do
-        if [ "$arg" = "/" ] || [ "$arg" = "$HOME" ]; then
-            echo "Error: Attempt to remove root or home directory. Aborting."
-            return 1
-        fi
-    done
-
-    # Create Trash directory if it doesn't exist
-    [ ! -d "$HOME/Trash" ] && mkdir -p "$HOME/Trash"
-
-    # Separate options from file/directory names
-    local files=()
-
-    for arg in "$@"; do
-        if [[ "$arg" != -* ]]; then
-            files+=("$arg")
-        fi
-    done
-
-    # Move files and directories to Trash
-    for file in "${files[@]}"; do
-        if [ -e "$file" ]; then
-            mv "$file" "$HOME/Trash/"
-        else
-            echo "Warning: '$file' not found."
-        fi
-    done
-}
+# rm() {
+#     # Prevent deletion of root and home directories
+#     for arg in "$@"; do
+#         if [ "$arg" = "/" ] || [ "$arg" = "$HOME" ]; then
+#             echo "Error: Attempt to remove root or home directory. Aborting."
+#             return 1
+#         fi
+#     done
+#
+#     # Create Trash directory if it doesn't exist
+#     [ ! -d "$HOME/Trash" ] && mkdir -p "$HOME/Trash"
+#
+#     # Separate options from file/directory names
+#     local files=()
+#
+#     for arg in "$@"; do
+#         if [[ "$arg" != -* ]]; then
+#             files+=("$arg")
+#         fi
+#     done
+#
+#     # Move files and directories to Trash
+#     for file in "${files[@]}"; do
+#         if [ -e "$file" ]; then
+#             mv "$file" "$HOME/Trash/"
+#         else
+#             echo "Warning: '$file' not found."
+#         fi
+#     done
+# }
 
 proj() {
   local dir
@@ -260,8 +274,29 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
   exec startx &> /dev/null
 fi
 
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
 export PATH=~/.local/scripts:$PATH
 export PATH=~/.local/bin:$PATH
+
+# Blockchain foundry
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+export PATH="$PATH:/home/neon/.foundry/bin"
+
+# Chromium
+export PATH="${HOME}/Projects/chromium/depot_tools:$PATH"
+
+# export ANDROID_HOME=$HOME/Android/Sdk
+# export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
 export WORDCHARS=${WORDCHARS//[\/]}
 export GIT_TERMINAL_PROMPT=1
 
@@ -273,3 +308,23 @@ case ":$PATH:" in
 esac
 # pnpm end
 export PATH=/home/neon/.meteor:$PATH
+
+# PATHS:
+
+# export GOROOT=/usr/local/go
+# export GOPATH=/home/neon/College/bct/lab-2a
+# export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
