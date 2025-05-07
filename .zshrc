@@ -292,6 +292,11 @@ export PATH="$PATH:/home/neon/.foundry/bin"
 # Chromium
 export PATH="${HOME}/Projects/chromium/depot_tools:$PATH"
 
+# Flutter
+export PATH="$PATH:$HOME/development/flutter/bin"
+export ANDROID_SDK_ROOT="$HOME/Android"
+export PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH"
+
 # export ANDROID_HOME=$HOME/Android/Sdk
 # export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
