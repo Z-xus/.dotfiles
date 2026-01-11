@@ -12,6 +12,8 @@ set splitbelow
 set nowrap
 set mouse=a
 set hlsearch
+syntax on
+filetype plugin indent on
 
 " search
 set ignorecase
@@ -31,8 +33,8 @@ set smartindent
 " File
 set noswapfile
 set nobackup
-set undofile
-set undodir=~/.vim/undodir
+" set undofile
+" set undodir=~/.vim/undodir
 
 " Perf
 set updatetime=1000
